@@ -4,7 +4,8 @@ const morgan = require("morgan");
 const path = require("path");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const mainRouter = require("./routes/mainrouter.js");
+const mainRouter = require("./routes/mainrouter");
+
 //  App creation
 const app = express();
 
@@ -48,7 +49,7 @@ app.get("/", (req, res, next) => {
   res.json({ message: "Go to /api/v1" });
 });
 
-app.get("/api/v1", mainRouter);
+app.use("/api/v1/", mainRouter);
 
 // app listening on port PORT :)
 const port = PORT || 8083;
