@@ -29,6 +29,7 @@ if (NODE_ENV === "development") {
   app.use(morgan("tiny"));
 }
 // DB connection
+mongoose.set("useCreateIndex", true);
 mongoose
   .connect(mongodb_URL, {
     useNewUrlParser: true,

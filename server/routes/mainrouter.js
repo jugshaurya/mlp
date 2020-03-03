@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const signup = require("../controller/signup");
 const signin = require("../controller/signin");
 const signout = require("../controller/signout");
@@ -10,7 +11,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/signup", signup);
-router.get("/signin", signin);
+router.post("/signin", signin);
 router.get("/signout", signout);
 
 module.exports = router;

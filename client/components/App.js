@@ -1,5 +1,12 @@
+import Header from "./Header";
+
 const App = () => {
-  return <h2>App</h2>;
+  return (
+    <div className="app">
+      <Header />
+      Welcome to the App Guys!
+    </div>
+  );
 };
 
 export default App;

@@ -8,7 +8,9 @@ const schema = Joi.object({
     .required()
     .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } }),
 
-  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{6,30}$"))
+  password: Joi.string()
+    .pattern(new RegExp("^[a-zA-Z0-9]{6,30}$"))
+    .error(new Error("Password should be alphanumeric and at least 6 length"))
 });
 
 // signin controller
@@ -17,24 +19,23 @@ const signin = async (req, res, next) => {
   const { email, password } = req.body;
   const { error } = schema.validate({ email, password });
   if (error) {
+    if (!error.details) return res.status(422).json({ error: error.message });
     return res.status(422).json({ error: error.details[0].message });
   }
 
   try {
     // check if email is there or not
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Email does not exist" });
+    if (!user) return res.status(400).json({ error: "Email does not exist" });
 
     // Validate the password
     user.verifyPassword(password, async function(error, isEqual) {
       if (error)
-        return res
-          .status(500)
-          .json({ message: "Password Checking went wrong" });
+        return res.status(500).json({ error: "Password Checking went wrong" });
       if (!isEqual)
         return res
           .status(400)
-          .json({ message: "Password and Email does't Match" });
+          .json({ error: "Password and Email does't Match" });
 
       // Credentials are correct now
       const token = await jwt.sign(
@@ -48,9 +49,13 @@ const signin = async (req, res, next) => {
       res.cookie("token", token, { expiresIn: "7d" });
       const { _id, username, name, role } = user;
       const emaill = user.email;
-      res.send({
+      res.json({
         token: token,
-        user: { _id, username, name, emaill, role },
+        _id,
+        username,
+        name,
+        emaill,
+        role,
         message: `Welcome ${name}`
       });
     });

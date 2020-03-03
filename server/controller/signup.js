@@ -19,7 +19,9 @@ const schema = Joi.object({
     .required()
     .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } }),
 
-  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{6,30}$"))
+  password: Joi.string()
+    .pattern(new RegExp("^[a-zA-Z0-9]{6,30}$"))
+    .error(new Error("Password should be alphanumeric and at least 6 length"))
 });
 
 // signup controller
@@ -30,13 +32,14 @@ const signup = async (req, res, next) => {
   // 1. Validate user input
   const { error } = schema.validate(userObj);
   if (error) {
+    if (!error.details) return res.status(422).json({ error: error.message });
     return res.status(422).json({ error: error.details[0].message });
   }
 
   // 2. save the user data in database if email does ot exist in db
   try {
     const user = await User.findOne({ email: email });
-    if (user) return res.status(422).send("User already Available");
+    if (user) return res.status(422).json({ error: "User already Available" });
 
     // user is new user
     const newUser = new User({

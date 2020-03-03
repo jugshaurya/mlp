@@ -1,5 +1,4 @@
-import App from "../components/App.js/index.js";
-
+import App from "../components/App";
 const Index = () => {
   return <App />;
 };
