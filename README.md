@@ -10,9 +10,7 @@ React JSX, component, Declarative, state, props way.
 
 🐳 Next has only two required directories `/pages` and `/public`
 
-# Setup
-
-https://nextjs.org/learn/basics/getting-started/setup
+# [Setup](https://nextjs.org/learn/basics/getting-started/setup)
 
 npm init -y
 npm install react react-dom next
@@ -43,10 +41,13 @@ npm start
 
 #### Not working
 
-https://nextjs.org/docs/api-reference/next.config.js/environment-variables
+```
+ - https://nextjs.org/docs/api-reference/next.config.js/environment-variables
 
-- Note: Trying to destructure process.env variables won't work due to the nature of webpack DefinePlugin.
+  - Note: Trying to destructure process.env variables won't work due to the nature of webpack DefinePlugin.
 
 #### working
 
-https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration
+ - https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration
+
+```
