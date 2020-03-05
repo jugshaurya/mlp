@@ -1,16 +1,15 @@
 const express = require("express");
+const app = express();
 const helmet = require("helmet");
 const morgan = require("morgan");
 const path = require("path");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const mainRouter = require("./routes/mainrouter");
-
-//  App creation
-const app = express();
 
 // Basic Configurtions
 require("dotenv").config();
+const mainRouter = require("./routes/mainrouter");
+
 const { CLIENT_URL, PORT, NODE_ENV } = process.env;
 // const whitelist = [CLIENT_URL];
 // const corsOptions = {

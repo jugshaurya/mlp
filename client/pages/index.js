@@ -1,6 +1,12 @@
-import App from "../components/App";
+import Header from "../components/Header";
+
 const Index = () => {
-  return <App />;
+  return (
+    <div className="app">
+      <Header />
+      Welcome to the App Guys!
+    </div>
+  );
 };
 
 export default Index;

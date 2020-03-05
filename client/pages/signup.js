@@ -6,6 +6,7 @@ const API = PRODUCTION ? API_PRODUCTION : API_DEVELOPMENT;
 // React Import
 import React from "react";
 import Router from "next/router";
+import Header from "../components/Header";
 
 // Generic input field
 class Input extends React.Component {
@@ -38,6 +39,10 @@ class Signup extends React.Component {
     name: "",
     password: ""
   };
+
+  componentDidMount() {
+    if (localStorage.getItem("token")) return Router.push("/");
+  }
 
   handleSubmit = async e => {
     e.preventDefault();
@@ -98,6 +103,7 @@ class Signup extends React.Component {
     } = this.state;
     return (
       <div className="signup">
+        <Header />
         {error && (
           <div className="error" style={{ background: "red", padding: "10px" }}>
             {error}

@@ -7,6 +7,7 @@ const API = PRODUCTION ? API_PRODUCTION : API_DEVELOPMENT;
 // React Import
 import React from "react";
 import Router from "next/router";
+import Header from "../components/Header";
 
 // Generic input field
 class Input extends React.Component {
@@ -38,6 +39,25 @@ class Signin extends React.Component {
     password: "test1a9a9a9"
   };
 
+  componentDidMount() {
+    if (localStorage.getItem("token")) return Router.push("/");
+  }
+
+  saveToLocalStorage = result => {
+    const { _id, username, name, email, token, role } = result;
+    localStorage.setItem("token", JSON.stringify(token));
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        _id,
+        username,
+        name,
+        email,
+        role
+      })
+    );
+  };
+
   handleSubmit = async e => {
     e.preventDefault();
     const { email, password } = this.state;
@@ -58,8 +78,8 @@ class Signin extends React.Component {
     const result = await response.json();
     if (result.error)
       this.setState({ error: result.error, message: null, loading: false });
-    //  Signin successful
     if (result.message)
+      //  Signin successful
       this.setState(
         {
           error: null,
@@ -69,7 +89,12 @@ class Signin extends React.Component {
           password: ""
         },
         () => {
-          Router.push("/");
+          this.saveToLocalStorage(result);
+          if (result.role == 1) {
+            Router.push("/admin");
+          } else {
+            Router.push("/user");
+          }
         }
       );
   };
@@ -86,6 +111,8 @@ class Signin extends React.Component {
     const { password, email, error, message, loading } = this.state;
     return (
       <div className="signup">
+        <Header />
+
         {error && (
           <div className="error" style={{ background: "red", padding: "10px" }}>
             {error}
@@ -111,13 +138,13 @@ class Signin extends React.Component {
               onChange={this.handleChange}
             />
             <Input
-              type="password"
+              type="text"
               name="password"
               value={password}
               placeholder="password"
               onChange={this.handleChange}
             />
-            <button> Sign In</button>
+            <button>Sign In </button>
           </form>
         )}
       </div>

@@ -46,15 +46,13 @@ const signin = async (req, res, next) => {
         }
       );
 
-      res.cookie("token", token, { expiresIn: "7d" });
       const { _id, username, name, role } = user;
-      const emaill = user.email;
       res.json({
         token: token,
         _id,
         username,
         name,
-        emaill,
+        email: user.email,
         role,
         message: `Welcome ${name}`
       });
