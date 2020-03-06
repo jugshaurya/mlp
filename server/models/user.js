@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      lowercase: true,
       max: 30,
       trim: true,
       index: true // indexing the username field because later we will be quering the db a lot depending on username, and indexing made it fast.
@@ -48,7 +47,7 @@ const userSchema = new mongoose.Schema(
       default: 0
     }
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 // Hashing the password before saving the user
