@@ -1,5 +1,5 @@
 const Joi = require("@hapi/joi");
-const Series = require("../../models/series");
+const Tag = require("../../models/tag");
 // validation
 const schema = Joi.object({
   title: Joi.string()
@@ -8,9 +8,9 @@ const schema = Joi.object({
     .required()
 });
 
-const get_a_series = async (req, res, next) => {
+const get_a_tag = async (req, res, next) => {
   const { title: bodytitle } = req.params;
-  const title = bodytitle.trim();
+  const title = bodytitle.trim().toLowerCase();
 
   // 1. Validate user input
   const { error } = schema.validate({ title });
@@ -25,16 +25,15 @@ const get_a_series = async (req, res, next) => {
     .join("-");
 
   try {
-    const series = await Series.findOne({ title: modifiedTitle });
-
-    if (series)
+    const tag = await Tag.findOne({ title: modifiedTitle });
+    if (tag)
       return res
         .status(200)
-        .json({ series, message: "A Series retrieved Successfully" });
-    return res.status(404).json({ message: "Series Not Found" });
+        .json({ tag, message: "A Tag retrieved Successfully" });
+    return res.status(404).json({ message: "Tag Not Found" });
   } catch (error) {
-    res.status(500).json({ error: "A Series Retrieval Error" });
+    res.status(500).json({ error: "A Tag Retrieval Error" });
   }
 };
 
-module.exports = get_a_series;
+module.exports = get_a_tag;

@@ -7,6 +7,7 @@ const API = PRODUCTION ? API_PRODUCTION : API_DEVELOPMENT;
 import React from "react";
 import Link from "next/link";
 import Router from "next/router";
+import NextNProgress from "./NextNProgress";
 
 class Header extends React.Component {
   state = {
@@ -37,6 +38,12 @@ class Header extends React.Component {
     const { user, message } = this.state;
     return (
       <div className="header" style={{ padding: 10 }}>
+        <NextNProgress
+          color="#222"
+          startPosition="0.3"
+          stopDelayMs="200"
+          height="5"
+        />
         {message && (
           <div
             className="message"

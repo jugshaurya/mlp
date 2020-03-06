@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const seriesSchema = new mongoose.Schema(
+const tagSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -24,4 +24,4 @@ const seriesSchema = new mongoose.Schema(
 );
 
 // descibe model class using mongoose.model
-module.exports = mongoose.model("Series", seriesSchema);
+module.exports = mongoose.model("Tag", tagSchema);

@@ -5,6 +5,8 @@ const signin = require("../controller/signin");
 const signup = require("../controller/signup");
 const signout = require("../controller/signout");
 const seriesRouter = require("./seriesrouter");
+const tagRouter = require("./tagrouter");
+
 // default
 router.get("/", (req, res, next) => {
   res.json({ message: "Welcome to version 1 api" });
@@ -17,5 +19,8 @@ router.post("/signout", signout);
 
 // series routers
 router.use("/series", seriesRouter);
+
+// tag routers
+router.use("/tag", tagRouter);
 
 module.exports = router;

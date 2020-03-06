@@ -3,7 +3,7 @@ const Series = require("../../models/series");
 const get_all_series = async (req, res, next) => {
   try {
     const all_series = await Series.find({});
-    res.status(201).json({
+    res.status(200).json({
       all_series,
       message: "Series Retrieved Succesfully"
     });

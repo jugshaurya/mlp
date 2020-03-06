@@ -1,5 +1,5 @@
 const Joi = require("@hapi/joi");
-const Series = require("../../models/series");
+const Tag = require("../../models/tag");
 // validation
 const schema = Joi.object({
   title: Joi.string()
@@ -10,7 +10,7 @@ const schema = Joi.object({
 
 const delete_a_series = async (req, res, next) => {
   const { title: paramstitle } = req.params;
-  const title = paramstitle.trim();
+  const title = paramstitle.trim().toLowerCase();
 
   // 1. Validate user input
   const { error } = schema.validate({ title });
@@ -25,16 +25,16 @@ const delete_a_series = async (req, res, next) => {
     .join("-");
 
   try {
-    const { ok, deletedCount } = await Series.deleteOne({
+    const { ok, deletedCount } = await Tag.deleteOne({
       title: modifiedTitle
     });
 
-    if (!ok) throw new Error("Series Deletion Error");
+    if (!ok) throw new Error("Tag Deletion Error");
     if (!deletedCount)
       return res.status(200).json({
-        message: "No series found for this title, but No Errors Chill!"
+        message: "No tag found for this name, but No Errors Chill!"
       });
-    return res.status(200).json({ message: "Series Deleted Successfully" });
+    return res.status(200).json({ message: "Tag Deleted Successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

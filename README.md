@@ -51,3 +51,8 @@ npm start
  - https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration
 
 ```
+
+## App has
+
+- list of series
+- list of tags to classified series
