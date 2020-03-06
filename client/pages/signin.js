@@ -8,27 +8,7 @@ const API = PRODUCTION ? API_PRODUCTION : API_DEVELOPMENT;
 import React from "react";
 import Router from "next/router";
 import Header from "../components/Header";
-
-// Generic input field
-class Input extends React.Component {
-  render() {
-    const { type, name, placeholder, onChange, value } = this.props;
-    return (
-      <div className="Input">
-        <input
-          type={type}
-          name={name}
-          placeholder={placeholder}
-          autoComplete="false"
-          required
-          onChange={onChange}
-          value={value}
-        />
-        <label htmlFor={name}></label>
-      </div>
-    );
-  }
-}
+import Input from "../components/Input";
 
 class Signin extends React.Component {
   state = {
